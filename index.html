@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Firebase CRUD</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+
+  <!-- SweetAlert -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+ <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+<!-- Loading -->
+<div class="loading-screen">
+  <div class="loader"></div>
+</div>
+
+<div class="container mt-5">
+  <h3>Add Person</h3>
+
+  <!-- FORM -->
+  <form id="form" class="row g-3">
+    <div class="col-md-4">
+      <input name="full_name" class="form-control" placeholder="Full Name" required>
+    </div>
+    <div class="col-md-4">
+      <input name="address" class="form-control" placeholder="Address" required>
+    </div>
+    <div class="col-md-4">
+      <input name="money" class="form-control" placeholder="Money" required>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-primary">Add</button>
+    </div>
+  </form>
+
+  <hr>
+
+  <!-- TABLE -->
+  <table class="table table-bordered">
+    <thead class="table-dark">
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Address</th>
+        <th>Money</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody id="tbl"></tbody>
+  </table>
+</div>
+
+<!-- MODAL -->
+<div class="modal fade" id="modal">
+  <div class="modal-dialog">
+    <form id="form-update" class="modal-content">
+      <div class="modal-header">
+        <h5>Edit</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <input type="hidden" id="u_id">
+        <input id="u_name" class="form-control mb-2" placeholder="Name">
+        <input id="u_address" class="form-control mb-2" placeholder="Address">
+        <input id="u_money" class="form-control mb-2" placeholder="Money">
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-success">Update</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Bootstrap -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script type="module" src="./script.js"></script>
+</body>
