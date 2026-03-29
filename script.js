@@ -53,8 +53,8 @@ onSnapshot(collection(db, "students"), (snapshot) => {
         <td>${d.address}</td>
         <td>${d.money}</td>
         <td>
-          <button class="btn btn-info btn-sm" onclick="edit('${docSnap.id}')">Edit</button>
-          <button class="btn btn-danger btn-sm" onclick="del('${docSnap.id}')">Delete</button>
+          <button class="btn btn-info btn-sm" onclick="edit('${docSnap.id}')">កែ</button>
+          <button class="btn btn-danger btn-sm" onclick="del('${docSnap.id}')">លុប</button>
         </td>
       </tr>
     `;
