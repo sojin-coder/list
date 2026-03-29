@@ -71,14 +71,14 @@ form.addEventListener("submit", async (e) => {
 
   await addDoc(collection(db, "students"), data);
 
-  Swal.fire("Success", "Added!", "success");
+  // Swal.fire("Success", "Added!", "success");
   form.reset();
 });
 
 // DELETE
 window.del = async (id) => {
   await deleteDoc(doc(db, "students", id));
-  Swal.fire("Deleted", "", "success");
+  // Swal.fire("Deleted", "", "success");
 };
 
 // EDIT
@@ -106,7 +106,7 @@ document.getElementById("form-update").addEventListener("submit", async (e) => {
     money: document.getElementById("u_money").value,
   });
 
-  Swal.fire("Updated", "", "success");
+  // Swal.fire("Updated", "", "success");
 
   bootstrap.Modal.getInstance(document.getElementById("modal")).hide();
 });
