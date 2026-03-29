@@ -1,10 +1,19 @@
 
 // Loading
-window.onload = () => {
-  setTimeout(() => {
-    document.querySelector(".loading-screen").style.display = "none";
-  }, 1000);
-};
+// window.onload = () => {
+//   setTimeout(() => {
+//     document.querySelector(".loading-screen").style.display = "none";
+//   }, 1000);
+// };
+ window.addEventListener('load', function() {
+    const loadingScreen = document.querySelector('.loading-screen');
+    setTimeout(function() {
+      loadingScreen.classList.add('hide');
+      setTimeout(function() {
+        loadingScreen.style.display = 'none';
+      }, 500);
+    }, 1000);
+  });
 
 // Firebase imports
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";

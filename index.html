@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Firebase CRUD</title>
+  <title>បញ្ជីឈ្មោះអ្នកចូលរួម</title>
 
   <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
@@ -10,19 +10,25 @@
   <!-- SweetAlert -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
- <link rel="stylesheet" href="./style.css">
-</head>
+  <link rel="stylesheet" href="./style.css">
 
+  
+</head>
 <body>
 
-<!-- Loading -->
+
+<!-- Loading Screen -->
 <div class="loading-screen">
   <div class="loader"></div>
+  <div class="loading-text">កំពុងផ្ទុកទិន្នន័យ... 🎉</div>
 </div>
 
 <div class="container mt-5">
-  <!-- <h3 class="text-center mb-5">បញ្ជីឈ្មោះអ្នកចូលរួម</h3> -->
- <div class="img p-5">
+  <!-- <div class="img p-3 p-md-5">
+    <img src="https://cdn-icons-png.flaticon.com/512/1998/1998592.png" alt="Angel">
+    <img src="https://cdn-icons-png.flaticon.com/512/3094/3094116.png" alt="Tevada">
+  </div> -->
+  <div class="img p-5">
   <img src="../image/Angels scatter flowers 2014 by 5Khmer.png" alt="">
   <!-- <img src="../image/tevada khmer graphic vector 2 kbach khmerright.png" alt=""> -->
 <h3 class="text-center mb-5">បញ្ជីឈ្មោះអ្នកចូលរួម</h3>
@@ -30,25 +36,23 @@
    <img src="../image/Angels scatter flowers 2014 by 5Khmerleft.png" alt="">
  </div>
   
+  <!-- <h3 class="text-center mb-5">បញ្ជីឈ្មោះអ្នកចូលរួម</h3> -->
 
   <!-- FORM -->
   <form id="form" class="row g-3">
-  <div class="col-12">
-    <input name="full_name" class="form-control" placeholder="សូមបញ្ចូលឈ្មោះ" required>
-  </div>
-  
-  <div class="col-12">
-    <input name="address" class="form-control" placeholder="អាស័យដ្ឋាន" required>
-  </div>
-  
-  <div class="col-12">
-    <input name="money" class="form-control" placeholder="ចំនួនទឺកប្រាក់" required>
-  </div>
-  
-  <div class="col-12">
-    <button class="btn btn-primary">បញ្ចូល</button>
-  </div>
-</form>
+    <div class="col-12">
+      <input name="full_name" class="form-control" placeholder="សូមបញ្ចូលឈ្មោះ" required>
+    </div>
+    <div class="col-12">
+      <input name="address" class="form-control" placeholder="អាស័យដ្ឋាន" required>
+    </div>
+    <div class="col-12">
+      <input name="money" class="form-control" placeholder="ចំនួនទឹកប្រាក់ (រៀល)" required>
+    </div>
+    <div class="col-12">
+      <button class="btn btn-primary">បញ្ចូល</button>
+    </div>
+  </form>
 
   <hr>
 
@@ -59,7 +63,7 @@
         <th>#</th>
         <th>ឈ្មោះ</th>
         <th>អាស័យដ្ឋាន</th>
-        <th>ចំនួនទឺកប្រាក់</th>
+        <th>ចំនួនទឹកប្រាក់ (រៀល)</th>
         <th>សកម្មភាព</th>
       </tr>
     </thead>
@@ -72,25 +76,27 @@
   <div class="modal-dialog">
     <form id="form-update" class="modal-content">
       <div class="modal-header">
-        <h5>កែ</h5>
+        <h5>កែទិន្នន័យ</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
-
       <div class="modal-body">
         <input type="hidden" id="u_id">
         <input id="u_name" class="form-control mb-2" placeholder="ឈ្មោះ">
         <input id="u_address" class="form-control mb-2" placeholder="អាស័យដ្ឋាន">
-        <input id="u_money" class="form-control mb-2" placeholder="ចំនួនទឺកប្រាក់">
+        <input id="u_money" class="form-control mb-2" placeholder="ចំនួនទឹកប្រាក់">
       </div>
-
       <div class="modal-footer">
-        <button class="btn btn-success">កែ</button>
+        <button class="btn btn-success">កែតម្រូវ</button>
       </div>
     </form>
   </div>
 </div>
 
-<!-- Bootstrap -->
+<!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Main JavaScript with Firebase CRUD -->
 <script type="module" src="./script.js"></script>
+
 </body>
+</html>
