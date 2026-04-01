@@ -1,102 +1,181 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>បញ្ជីឈ្មោះអ្នកចូលរួម</title>
+<!doctype html>
+<html lang="km">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Participants Registry</title>
 
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
 
-  <!-- SweetAlert -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-  <link rel="stylesheet" href="./style.css">
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
 
-  
-</head>
-<body>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
 
-
-<!-- Loading Screen -->
-<div class="loading-screen">
-  <div class="loader"></div>
-  <div class="loading-text">កំពុងផ្ទុកទិន្នន័យ... 🎉</div>
-</div>
-
-<div class="container mt-5">
-  <!-- <div class="img p-3 p-md-5">
-    <img src="https://cdn-icons-png.flaticon.com/512/1998/1998592.png" alt="Angel">
-    <img src="https://cdn-icons-png.flaticon.com/512/3094/3094116.png" alt="Tevada">
-  </div> -->
-  <div class="img p-5">
-  <img src="../image/Angels scatter flowers 2014 by 5Khmer.png" alt="">
-  <!-- <img src="../image/tevada khmer graphic vector 2 kbach khmerright.png" alt=""> -->
-<h3 class="text-center mb-5">បញ្ជីឈ្មោះអ្នកចូលរួម</h3>
-  <!-- <img src="../image/tevada khmer graphic vector 2 kbach khmer.PNG" alt=""> -->
-   <img src="../image/Angels scatter flowers 2014 by 5Khmerleft.png" alt="">
- </div>
-  
-  <!-- <h3 class="text-center mb-5">បញ្ជីឈ្មោះអ្នកចូលរួម</h3> -->
-
-  <!-- FORM -->
-  <form id="form" class="row g-3">
-    <div class="col-12">
-      <input name="full_name" class="form-control" placeholder="សូមបញ្ចូលឈ្មោះ" required>
-    </div>
-    <div class="col-12">
-      <input name="address" class="form-control" placeholder="អាស័យដ្ឋាន" required>
-    </div>
-    <div class="col-12">
-      <input name="money" class="form-control" placeholder="ចំនួនទឹកប្រាក់ (រៀល)" required>
-    </div>
-    <div class="col-12">
-      <button class="btn btn-primary">បញ្ចូល</button>
-    </div>
-  </form>
-
-  <hr>
-
-  <!-- TABLE -->
-  <table class="table table-bordered">
-    <thead class="table-dark">
-      <tr>
-        <th>#</th>
-        <th>ឈ្មោះ</th>
-        <th>អាស័យដ្ឋាន</th>
-        <th>ចំនួនទឹកប្រាក់ (រៀល)</th>
-        <th>សកម្មភាព</th>
-      </tr>
-    </thead>
-    <tbody id="tbl"></tbody>
-  </table>
-</div>
-
-<!-- MODAL -->
-<div class="modal fade" id="modal">
-  <div class="modal-dialog">
-    <form id="form-update" class="modal-content">
-      <div class="modal-header">
-        <h5>កែទិន្នន័យ</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+  <body>
+    <div class="loading-screen">
+      <div class="digital-loader">
+        <div class="circle"></div>
+        <div class="circle"></div>
       </div>
-      <div class="modal-body">
-        <input type="hidden" id="u_id">
-        <input id="u_name" class="form-control mb-2" placeholder="ឈ្មោះ">
-        <input id="u_address" class="form-control mb-2" placeholder="អាស័យដ្ឋាន">
-        <input id="u_money" class="form-control mb-2" placeholder="ចំនួនទឹកប្រាក់">
+      <div class="loading-text">SYNCING DATA...</div>
+    </div>
+
+    <div class="app-background">
+      <div class="glowing-orb" id="orb-1"></div>
+      <div class="glowing-orb" id="orb-2"></div>
+    </div>
+
+    <div class="main-content">
+      <div class="container py-5">
+        <div class="app-header text-center mb-5">
+          <!-- <div class="icon-box">
+             <i class="fas fa-satellite-dish"></i> 
+          </div> -->
+          <h1 class="fw-bold mt-3">បញ្ជីឈ្មោះអ្នកចូលរួម</h1>
+          <p class="text-muted">Digital Hub • Real-time Sync</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-4">
+            <div class="digital-card form-card">
+              <div class="card-header-v2">
+                <i class="fas fa-user-plus me-2"></i> បញ្ចូលទិន្នន័យ
+              </div>
+              <form id="form" class="mt-4">
+                <div class="input-group-v2 mb-3">
+                  <i class="fas fa-user icon"></i>
+                  <input
+                    name="full_name"
+                    class="form-control-v2"
+                    placeholder="ឈ្មោះពេញ"
+                    required
+                  />
+                </div>
+
+                <div class="input-group-v2 mb-3">
+                  <i class="fas fa-map-marker-alt icon"></i>
+                  <input
+                    name="address"
+                    class="form-control-v2"
+                    placeholder="អាស័យដ្ឋាន"
+                    required
+                  />
+                </div>
+
+                <div class="input-group-v2 mb-4">
+                  <i class="fas fa-coins icon"></i>
+                  <input
+                    type="number"
+                    name="money"
+                    class="form-control-v2"
+                    placeholder="ចំនួនទឹកប្រាក់ ($ / ៛)"
+                    required
+                  />
+                </div>
+
+                <button
+                  type="submit"
+                  class="btn-digital btn-primary-digital w-100"
+                >
+                  <i class="fas fa-save me-2"></i> រក្សាទុក
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="col-lg-8">
+            <div class="digital-card table-card">
+              <div
+                class="card-header-v2 d-flex justify-content-between align-items-center"
+              >
+                <span><i class="fas fa-list-ul me-2"></i> បញ្ជីសរុប</span>
+                <span class="status-badge"
+                  ><i class="fas fa-circle me-1"></i> ផ្ទាល់</span
+                >
+              </div>
+
+              <div class="table-responsive-v2 mt-3">
+                <table class="table-v2">
+                  <thead>
+                    <tr>
+                      <th class="text-center">#</th>
+                      <th>ឈ្មោះ</th>
+                      <th>អាស័យដ្ឋាន</th>
+                      <th class="text-end">ថវិកា</th>
+                      <th class="text-center">សកម្មភាព</th>
+                    </tr>
+                  </thead>
+                  <tbody id="tbl"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-success">កែតម្រូវ</button>
+    </div>
+
+    <div class="modal fade" id="modal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <form id="form-update" class="modal-content-digital">
+          <div class="modal-header-digital bg-grad-purple text-white">
+            <h5 class="modal-title">
+              <i class="fas fa-edit me-2"></i> កែទិន្នន័យ
+            </h5>
+            <button
+              type="button"
+              class="btn-close-digital"
+              data-bs-dismiss="modal"
+            ></button>
+          </div>
+          <div class="modal-body p-4">
+            <input type="hidden" id="u_id" />
+            <div class="input-group-v2 mb-3 active">
+              <i class="fas fa-user icon"></i>
+              <input id="u_name" class="form-control-v2" required />
+            </div>
+            <div class="input-group-v2 mb-3 active">
+              <i class="fas fa-map-marker-alt icon"></i>
+              <input id="u_address" class="form-control-v2" required />
+            </div>
+            <div class="input-group-v2 mb-3 active">
+              <i class="fas fa-coins icon"></i>
+              <input
+                type="number"
+                id="u_money"
+                class="form-control-v2"
+                required
+              />
+            </div>
+          </div>
+          <div class="modal-footer-digital">
+            <button
+              type="button"
+              class="btn-digital btn-secondary-digital"
+              data-bs-dismiss="modal"
+            >
+              បោះបង់
+            </button>
+            <button type="submit" class="btn-digital btn-update-digital px-4">
+              យល់ព្រម
+            </button>
+          </div>
+        </form>
       </div>
-    </form>
-  </div>
-</div>
+    </div>
 
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Main JavaScript with Firebase CRUD -->
-<script type="module" src="./script.js"></script>
-
-</body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bundle.min.js"></script>
+    <script type="module" src="./script.js"></script>
+  </body>
 </html>
