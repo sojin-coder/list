@@ -119,20 +119,3 @@ document.getElementById("form-update").addEventListener("submit", async (e) => {
 
   bootstrap.Modal.getInstance(document.getElementById("modal")).hide();
 });
-// Party effect when adding data
-function showParty() {
-  const partyEmojis = ['🎉', '🎊', '🥳', '✨', '💫', '🎈', '🎪', '🤡', '😍', '🔥'];
-  for(let i = 0; i < 10; i++) {
-    const emoji = document.createElement('div');
-    emoji.textContent = partyEmojis[Math.floor(Math.random() * partyEmojis.length)];
-    emoji.style.position = 'fixed';
-    emoji.style.left = Math.random() * 100 + '%';
-    emoji.style.top = '50%';
-    emoji.style.fontSize = Math.random() * 30 + 20 + 'px';
-    emoji.style.animation = 'party 1s ease-out forwards';
-    emoji.style.pointerEvents = 'none';
-    emoji.style.zIndex = '9999';
-    document.body.appendChild(emoji);
-    setTimeout(() => emoji.remove(), 1000);
-  }
-}
