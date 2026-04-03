@@ -1,102 +1,125 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="km">
 <head>
   <meta charset="UTF-8" />
-  <title>បញ្ជីឈ្មោះអ្នកចូលរួម</title>
-
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-
-  <!-- SweetAlert -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
-  <link rel="stylesheet" href="./style.css">
-
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Digital Registry | Centered Form & Glassmorphism</title>
+  <!-- Bootstrap 5 + Icons + Khmer Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Khmer:wght@300;400;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+<link rel="stylesheet" href="./style.css">
 </head>
 <body>
 
+<div class="glowing-orb" id="orb-1"></div>
+<div class="glowing-orb" id="orb-2"></div>
 
-<!-- Loading Screen -->
-<div class="loading-screen">
-  <div class="loader"></div>
-  <div class="loading-text">កំពុងផ្ទុកទិន្នន័យ... 🎉</div>
-</div>
-
-<div class="container mt-5">
-  <!-- <div class="img p-3 p-md-5">
-    <img src="https://cdn-icons-png.flaticon.com/512/1998/1998592.png" alt="Angel">
-    <img src="https://cdn-icons-png.flaticon.com/512/3094/3094116.png" alt="Tevada">
-  </div> -->
-  <div class="img p-5">
-  <img src="../image/Angels scatter flowers 2014 by 5Khmer.png" alt="">
-  <!-- <img src="../image/tevada khmer graphic vector 2 kbach khmerright.png" alt=""> -->
-<h3 class="text-center mb-5">បញ្ជីឈ្មោះអ្នកចូលរួម</h3>
-  <!-- <img src="../image/tevada khmer graphic vector 2 kbach khmer.PNG" alt=""> -->
-   <img src="../image/Angels scatter flowers 2014 by 5Khmerleft.png" alt="">
- </div>
-  
-  <!-- <h3 class="text-center mb-5">បញ្ជីឈ្មោះអ្នកចូលរួម</h3> -->
-
-  <!-- FORM -->
-  <form id="form" class="row g-3">
-    <div class="col-12">
-      <input name="full_name" class="form-control" placeholder="សូមបញ្ចូលឈ្មោះ" required>
-    </div>
-    <div class="col-12">
-      <input name="address" class="form-control" placeholder="អាស័យដ្ឋាន" required>
-    </div>
-    <div class="col-12">
-      <input name="money" class="form-control" placeholder="ចំនួនទឹកប្រាក់ (រៀល)" required>
-    </div>
-    <div class="col-12">
-      <button class="btn btn-primary">បញ្ចូល</button>
-    </div>
-  </form>
-<br>
-  <hr>
-
-  
-</div>
-<!-- TABLE -->
-  <table class="table table-bordered mt-10">
-    <thead class="table-dark">
-      <tr>
-        <th>ល.រ</th>
-        <th>ឈ្មោះ</th>
-        <th>អាស័យដ្ឋាន</th>
-        <th>ចំនួនទឹកប្រាក់ </th>
-        <th>កែសម្រួល</th>
-      </tr>
-    </thead>
-    <tbody id="tbl"></tbody>
-  </table>
-<!-- MODAL -->
-<div class="modal fade" id="modal">
-  <div class="modal-dialog">
-    <form id="form-update" class="modal-content">
-      <div class="modal-header">
-        <h5>កែទិន្នន័យ</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<div class="main-wrapper">
+  <div class="registry-container">
+    <!-- Header Section -->
+    <div class="digital-header mb-4">
+      <div class="glow-icon mx-auto">
+        <i class="fas fa-users-viewfinder"></i>
       </div>
-      <div class="modal-body">
-        <input type="hidden" id="u_id">
-        <input id="u_name" class="form-control mb-2" placeholder="ឈ្មោះ">
-        <input id="u_address" class="form-control mb-2" placeholder="អាស័យដ្ឋាន">
-        <input id="u_money" class="form-control mb-2" placeholder="ចំនួនទឹកប្រាក់">
+      <h1 class="fw-bold">បញ្ជីឈ្មោះអ្នកចូលរួម</h1>
+      <p class="text-light-emphasis">Digital Hub • Real-time Sync • Glass Interface</p>
+    </div>
+
+    <!-- FORM FULLY CENTERED (top row, centered in the middle) -->
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-8 col-lg-6 col-xl-5">
+        <div class="glass-card form-card-centered">
+          <div class="card-header-modern">
+            <i class="fas fa-user-plus me-2 text-info"></i> បញ្ចូលទិន្នន័យថ្មី
+          </div>
+          <form id="participantForm">
+            <div class="input-group-v2">
+              <i class="fas fa-user icon"></i>
+              <input type="text" id="fullName" class="form-control-v2" placeholder="ឈ្មោះពេញ" autocomplete="off" required />
+            </div>
+            <div class="input-group-v2">
+              <i class="fas fa-map-marker-alt icon"></i>
+              <input type="text" id="address" class="form-control-v2" placeholder="អាស័យដ្ឋាន" autocomplete="off" required />
+            </div>
+            <div class="input-group-v2">
+              <i class="fas fa-coins icon"></i>
+              <input type="number" id="money" class="form-control-v2" placeholder="ចំនួនទឹកប្រាក់ ($ / ៛)" required />
+            </div>
+            <button type="submit" class="btn-digital-neon mt-2">
+              <i class="fas fa-save me-2"></i> រក្សាទុកក្នុងប្រព័ន្ធ
+            </button>
+          </form>
+        </div>
       </div>
-      <div class="modal-footer">
-        <button class="btn btn-success">កែតម្រូវ</button>
+    </div>
+
+    <!-- TABLE SECTION (below form, full width) -->
+    <div class="row mt-5">
+      <div class="col-12">
+        <div class="glass-card">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
+            <div class="card-header-modern mb-0">
+              <i class="fas fa-list-check me-2"></i> បញ្ជីសរុបអ្នកចូលរួម
+            </div>
+            <span class="status-badge"><i class="fas fa-circle me-1" style="font-size: 8px; color: #0f0;"></i> ផ្ទាល់ &nbsp;|&nbsp; <span id="recordCount">0</span> នាក់</span>
+          </div>
+          <div class="table-responsive">
+            <table class="table-custom">
+              <thead>
+                <tr>
+                  <th class="text-center">#</th>
+                  <th>ឈ្មោះពេញ</th>
+                  <th>អាស័យដ្ឋាន</th>
+                  <th class="text-end">ថវិកា</th>
+                  <th class="text-center">សកម្មភាព</th>
+                </tr>
+              </thead>
+              <tbody id="participantTableBody">
+                <tr><td colspan="5" class="text-center py-5"><div class="digital-loader"><div class="circle" style="width:32px;height:32px;margin:0 auto;"></div></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
-    </form>
+    </div>
   </div>
 </div>
 
-<!-- Bootstrap JS -->
+<!-- EDIT MODAL (glass) -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content-digital">
+      <div class="modal-header-digital">
+        <h5 class="modal-title"><i class="fas fa-pen-fancy me-2"></i>កែតម្រូវទិន្នន័យ</h5>
+        <button type="button" class="btn-close-digital" data-bs-dismiss="modal" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body p-4">
+        <input type="hidden" id="editId" />
+        <div class="input-group-v2 mb-3">
+          <i class="fas fa-user icon"></i>
+          <input type="text" id="editName" class="form-control-v2" placeholder="ឈ្មោះពេញ" />
+        </div>
+        <div class="input-group-v2 mb-3">
+          <i class="fas fa-map-marker-alt icon"></i>
+          <input type="text" id="editAddress" class="form-control-v2" placeholder="អាស័យដ្ឋាន" />
+        </div>
+        <div class="input-group-v2 mb-2">
+          <i class="fas fa-coins icon"></i>
+          <input type="number" id="editMoney" class="form-control-v2" placeholder="ចំនួនទឹកប្រាក់" />
+        </div>
+      </div>
+      <div class="modal-footer-digital">
+        <button type="button" class="btn btn-secondary" style="background:#2d3e5f; border:none;" data-bs-dismiss="modal">បោះបង់</button>
+        <button type="button" id="confirmUpdateBtn" class="btn-digital-neon" style="padding: 10px 24px;">រក្សាការផ្លាស់ប្តូរ</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Main JavaScript with Firebase CRUD -->
-<script type="module" src="./script.js"></script>
-
+<script type="module" src="./script.js">
+ 
+</script>
 </body>
 </html>
