@@ -1,106 +1,31 @@
- // Firebase imports
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    onSnapshot,
-    deleteDoc,
-    doc,
-    updateDoc,
-  } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
 
-  // Firebase Config
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, onSnapshot, doc, deleteDoc, updateDoc } from "https://www.gstatic.com/firebasejs/12.6.0/firebase-firestore.js";
+
+  // Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyBN9CPViV4ok9kAhZTBGm8h76x8XcAdmGk",
     authDomain: "my-listing-947ff.firebaseapp.com",
     projectId: "my-listing-947ff",
     storageBucket: "my-listing-947ff.appspot.com",
     messagingSenderId: "1039885458733",
-    appId: "1:1039885458733:web:0e3a06b5dd600e3b2f07a4",
+    appId: "1:1039885458733:web:0e3a06b5dd600e3b2f07a4"
   };
 
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
-  const studentsCol = collection(db, "students");
+  const colRef = collection(db, "students");
 
-  // Helper: Format money (USD style or Riel style)
+  const modalEdit = new bootstrap.Modal(document.getElementById('editModal'));
+
+  // Helper: format currency
   const formatMoney = (amount) => {
-    const num = Number(amount);
-    if (isNaN(num)) return "$0";
-    if (num < 1000) {
-      return `$${num.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
-    } else {
-      return `${num.toLocaleString("km-KH")} ៛`;
-    }
+    let num = Number(amount);
+    if (isNaN(num)) num = 0;
+    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(num);
   };
 
-  // DOM elements
-  const tbody = document.getElementById("participantTableBody");
-  const recordSpan = document.getElementById("recordCount");
-  const form = document.getElementById("participantForm");
-  const fullNameInput = document.getElementById("fullName");
-  const addressInput = document.getElementById("address");
-  const moneyInput = document.getElementById("money");
-
-  // Edit modal elements
-  const editModalElem = document.getElementById("editModal");
-  let editModalInstance = null;
-  const editIdInput = document.getElementById("editId");
-  const editNameInput = document.getElementById("editName");
-  const editAddressInput = document.getElementById("editAddress");
-  const editMoneyInput = document.getElementById("editMoney");
-  const confirmUpdateBtn = document.getElementById("confirmUpdateBtn");
-
-  // Real-time listener (with record counter)
-  onSnapshot(studentsCol, (snapshot) => {
-    const records = snapshot.docs;
-    recordSpan.innerText = records.length;
-    
-    if (records.length === 0) {
-      tbody.innerHTML = `<tr><td colspan="5" class="text-center text-muted py-5">
-        <i class="fas fa-folder-open d-block mb-3 fs-1 opacity-50"></i>
-        គ្មានទិន្នន័យ សូមបញ្ចូលអ្នកចូលរួមថ្មី!
-      </td></tr>`;
-      return;
-    }
-
-    let html = "";
-    let counter = 1;
-    records.forEach((docSnap) => {
-      const data = docSnap.data();
-      const docId = docSnap.id;
-      html += `
-        <tr>
-          <td class="text-center fw-bold" style="color: #a0e7ff;">${counter++}</td>
-          <td class="fw-semibold">${escapeHtml(data.full_name) || ""}</td>
-          <td><i class="fas fa-location-dot me-2 opacity-75" style="color:#7aa2f7;"></i> ${escapeHtml(data.address) || ""}</td>
-          <td class="text-end money-cell">${formatMoney(data.money)}</td>
-          <td class="text-center">
-            <button class="action-btn-digital btn-edit-v2" data-edit-id="${docId}" data-fullname="${escapeHtml(data.full_name)}" data-address="${escapeHtml(data.address)}" data-money="${data.money}">
-              <i class="fas fa-pen"></i>
-            </button>
-            <button class="action-btn-digital btn-del-v2" data-delete-id="${docId}">
-              <i class="fas fa-trash-alt"></i>
-            </button>
-          </td>
-        </tr>
-      `;
-    });
-    tbody.innerHTML = html;
-
-    // attach delete & edit events dynamically after render
-    document.querySelectorAll('[data-delete-id]').forEach(btn => {
-      btn.removeEventListener('click', handleDelete);
-      btn.addEventListener('click', handleDelete);
-    });
-    document.querySelectorAll('[data-edit-id]').forEach(btn => {
-      btn.removeEventListener('click', handleEdit);
-      btn.addEventListener('click', handleEdit);
-    });
-  });
-
-  // Escape HTML to prevent injection
+  // Helper: escape HTML
   function escapeHtml(str) {
     if (!str) return '';
     return str.replace(/[&<>]/g, function(m) {
@@ -111,126 +36,128 @@
     });
   }
 
-  // Delete handler
-  async function handleDelete(e) {
-    e.stopPropagation();
-    const id = this.getAttribute('data-delete-id');
-    if (!id) return;
-    try {
-      await deleteDoc(doc(db, "students", id));
-      showDigitalSpark();
-    } catch (err) {
-      console.error("Delete error:", err);
-    }
-  }
-
-  // Edit handler: fill modal and show
-  function handleEdit(e) {
-    e.stopPropagation();
-    const id = this.getAttribute('data-edit-id');
-    const fullName = this.getAttribute('data-fullname');
-    const address = this.getAttribute('data-address');
-    const money = this.getAttribute('data-money');
-    
-    editIdInput.value = id;
-    editNameInput.value = fullName || '';
-    editAddressInput.value = address || '';
-    editMoneyInput.value = money !== 'null' ? money : '';
-    
-    if (!editModalInstance) {
-      editModalInstance = new bootstrap.Modal(editModalElem);
-    }
-    editModalInstance.show();
-  }
-
-  // Update confirmation
-  confirmUpdateBtn.addEventListener('click', async () => {
-    const id = editIdInput.value;
-    const newName = editNameInput.value.trim();
-    const newAddress = editAddressInput.value.trim();
-    const newMoney = editMoneyInput.value;
-    
-    if (!newName || !newAddress || newMoney === '') {
-      alert("សូមបំពេញព័ត៌មានទាំងអស់");
-      return;
-    }
-    
-    try {
-      await updateDoc(doc(db, "students", id), {
-        full_name: newName,
-        address: newAddress,
-        money: Number(newMoney),
-      });
-      if (editModalInstance) editModalInstance.hide();
-      showDigitalSpark();
-    } catch (err) {
-      console.error("Update failed:", err);
-      alert("ការកែប្រែបរាជ័យ, សូមពិនិត្យបណ្តាញ");
-    }
-  });
-
-  // Add new participant
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const full_name = fullNameInput.value.trim();
-    const address = addressInput.value.trim();
-    const money = parseFloat(moneyInput.value);
-    
-    if (!full_name || !address || isNaN(money)) {
-      alert("សូមបំពេញទិន្នន័យឲ្យបានត្រឹមត្រូវ");
-      return;
-    }
-    
-    try {
-      await addDoc(studentsCol, {
-        full_name: full_name,
-        address: address,
-        money: money,
-      });
-      form.reset();
-      showDigitalSpark();
-    } catch (err) {
-      console.error("Add error:", err);
-      alert("មិនអាចបន្ថែមទិន្នន័យបានទេ!");
-    }
-  });
-
-  // Digital spark effect (small celebration)
-  function showDigitalSpark() {
-    for (let i = 0; i < 10; i++) {
-      const spark = document.createElement("div");
-      spark.textContent = "✨";
-      spark.style.cssText = `
-        position: fixed;
-        left: ${Math.random() * 100}%;
-        top: ${Math.random() * 80 + 10}%;
-        font-size: ${Math.random() * 20 + 12}px;
-        animation: sparkFloat 0.9s ease-out forwards;
-        pointer-events: none;
-        z-index: 10000;
-        opacity: 0.8;
+  // REAL-TIME LISTENER - បង្ហាញទិន្នន័យក្នុងតារាង (FORM OUTPUT)
+  let rowCounter = 0;
+  onSnapshot(colRef, (snapshot) => {
+    let rows = "";
+    let index = 1;
+    snapshot.forEach(docSnap => {
+      const data = docSnap.data();
+      const fullName = data.full_name || "—";
+      const address = data.address || "—";
+      const moneyVal = data.money !== undefined && data.money !== null ? parseFloat(data.money) : 0;
+      
+      rows += `
+        <tr>
+          <td class="text-center" style="width: 50px;">${index}</td>
+          <td class="fw-semibold"><i class="fas fa-id-card me-2 text-info opacity-70"></i>${escapeHtml(fullName)}</td>
+          <td><i class="fas fa-location-dot me-1 text-secondary"></i> <small>${escapeHtml(address)}</small></td>
+          <td class="text-end fw-bold text-success">${formatMoney(moneyVal)}</td>
+          <td class="text-center">
+            <button class="icon-btn edit" onclick="window.editEntry('${docSnap.id}', '${escapeHtml(fullName)}', '${escapeHtml(address)}', ${moneyVal})">
+              <i class="fas fa-pen"></i>
+            </button>
+            <button class="icon-btn delete" onclick="window.deleteEntry('${docSnap.id}')">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
       `;
-      document.body.appendChild(spark);
-      setTimeout(() => spark.remove(), 900);
+      index++;
+    });
+    
+    if (rows === "") {
+      rows = `<tr><td colspan="5" class="text-center py-5 opacity-50"><i class="fas fa-inbox fa-2x mb-2 d-block"></i>មិនទាន់មានទិន្នន័យ</td></tr>`;
     }
-  }
+    
+    document.getElementById("listBody").innerHTML = rows;
+    document.getElementById("countLabel").innerHTML = `<i class="fas fa-user-check me-1"></i>${snapshot.size} នាក់`;
+  });
 
-  // inject keyframes for spark effect
-  if (!document.querySelector("#sparkStyle")) {
-    const styleSheet = document.createElement("style");
-    styleSheet.id = "sparkStyle";
-    styleSheet.textContent = `
-      @keyframes sparkFloat {
-        0% { transform: translateY(0) scale(0.8); opacity: 1; }
-        100% { transform: translateY(-120px) scale(0.2) rotate(20deg); opacity: 0; }
+  // CREATE - បន្ថែមទិន្នន័យថ្មី (FORM INPUT)
+  const addForm = document.getElementById("addForm");
+  addForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const nameVal = document.getElementById("nameInp").value.trim();
+    const addrVal = document.getElementById("addrInp").value.trim();
+    let moneyVal = parseFloat(document.getElementById("moneyInp").value);
+    if (isNaN(moneyVal)) moneyVal = 0;
+    
+    if (!nameVal) {
+      alert("សូមបញ្ចូលឈ្មោះពេញ");
+      return;
+    }
+    
+    try {
+      await addDoc(colRef, {
+        full_name: nameVal,
+        address: addrVal || "មិនបានបញ្ជាក់",
+        money: moneyVal
+      });
+      
+      // Reset form
+      addForm.reset();
+      
+      // Show success feedback
+      const btn = addForm.querySelector("button[type='submit']");
+      const originalText = btn.innerHTML;
+      btn.innerHTML = '<i class="fas fa-check-circle me-1"></i> រក្សាទុកដោយជោគជ័យ!';
+      btn.style.background = "linear-gradient(95deg, #00c6ff, #0aff9d)";
+      setTimeout(() => { 
+        btn.innerHTML = originalText;
+        btn.style.background = "linear-gradient(95deg, #00c6ff, #0072ff)";
+      }, 2000);
+      
+    } catch (err) {
+      console.error(err);
+      alert("មានបញ្ហាក្នុងការរក្សាទុកទិន្នន័យ");
+    }
+  });
+
+  // DELETE - លុបទិន្នន័យ
+  window.deleteEntry = async (id) => {
+    if (confirm("តើអ្នកពិតជាចង់លុបសមាជិកនេះមែនទេ?\nទិន្នន័យនឹងបាត់បង់ជាអចិន្ត្រៃយ៍")) {
+      try {
+        await deleteDoc(doc(db, "students", id));
+      } catch (error) {
+        alert("លុបមិនបាន: " + error.message);
       }
-    `;
-    document.head.appendChild(styleSheet);
-  }
+    }
+  };
 
-  // init modal on demand
-  window.addEventListener('load', () => {
-    if (typeof bootstrap !== 'undefined') {
-      editModalInstance = new bootstrap.Modal(editModalElem, { backdrop: 'static', keyboard: true });
+  // EDIT - បើកទម្រង់កែប្រែ
+  window.editEntry = (id, name, address, money) => {
+    document.getElementById("editId").value = id;
+    document.getElementById("editName").value = name;
+    document.getElementById("editAddr").value = address;
+    document.getElementById("editMoney").value = money;
+    modalEdit.show();
+  };
+
+  // UPDATE - កែប្រែទិន្នន័យ
+  document.getElementById("updateBtn").addEventListener("click", async () => {
+    const id = document.getElementById("editId").value;
+    if (!id) return;
+    
+    const newName = document.getElementById("editName").value.trim();
+    const newAddr = document.getElementById("editAddr").value.trim();
+    let newMoney = parseFloat(document.getElementById("editMoney").value);
+    if (isNaN(newMoney)) newMoney = 0;
+    
+    if (!newName) {
+      alert("សូមបញ្ចូលឈ្មោះពេញ");
+      return;
+    }
+    
+    try {
+      const docRef = doc(db, "students", id);
+      await updateDoc(docRef, {
+        full_name: newName,
+        address: newAddr || "មិនបានបញ្ជាក់",
+        money: newMoney
+      });
+      modalEdit.hide();
+    } catch (err) {
+      alert("ការកែប្រែបរាជ័យ: " + err.message);
     }
   });
