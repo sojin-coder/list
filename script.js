@@ -52,7 +52,7 @@
           <td class="text-center" style="width: 50px;">${index}</td>
           <td class="fw-semibold"><i class="fas fa-id-card me-2 text-info opacity-70"></i>${escapeHtml(fullName)}</td>
           <td><i class="fas fa-location-dot me-1 text-secondary"></i> <small>${escapeHtml(address)}</small></td>
-          <td class="text-end fw-bold text-success">${formatMoney(moneyVal)}</td>
+          <td class="text-end fw-bold" style="color:#ffa500;">${formatMoney(moneyVal)}</td>
           <td class="text-center">
             <button class="icon-btn edit" onclick="window.editEntry('${docSnap.id}', '${escapeHtml(fullName)}', '${escapeHtml(address)}', ${moneyVal})">
               <i class="fas fa-pen"></i>
