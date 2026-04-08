@@ -1,559 +1,376 @@
-/* ============================================
-   GLOBAL RESET & VARIABLES
-   ============================================ */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-:root {
-  /* Cyberpunk Color System - Removed info colors */
-  --cyber-primary: #00f2ff;
-  --cyber-secondary: #7000ff;
-  --cyber-accent: #ff2079;
-  --cyber-green: #0aff9d;
-  --cyber-warning: #ffb800;
-  --cyber-dark: #0a0f2a;
-  
-  /* Text Colors - Changed to black */
-  --text-primary: #000000;
-  --text-secondary: #1a1a1a;
-  --text-muted: #333333;
-  --text-dark: #000000;
-  
-  /* Glassmorphism - Lighter for black text */
-  --glass-bg: rgba(255, 255, 255, 0.85);
-  --glass-bg-hover: rgba(255, 255, 255, 0.95);
-  --glass-border: rgba(0, 0, 0, 0.15);
-  --glass-border-light: rgba(0, 0, 0, 0.08);
-  
-  /* Effects */
-  --card-radius: 1.5rem;
-  --glow-sm: 0 0 8px rgba(0, 242, 255, 0.3);
-  --glow-md: 0 10px 30px -8px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 242, 255, 0.2);
-  --glow-lg: 0 0 20px rgba(0, 242, 255, 0.4);
-  
-  /* Transitions */
-  --transition-fast: 0.2s ease;
-  --transition-normal: 0.3s ease;
-}
-
-/* ============================================
-   BACKGROUND & BODY
-   ============================================ */
-body {
-  font-family: "Plus Jakarta Sans", "Noto Sans Khmer", sans-serif;
-  background: radial-gradient(circle at 10% 20%, rgba(0, 20, 40, 1), rgba(0, 0, 0, 0.95));
-  background-attachment: fixed;
-  color: var(--text-primary);
-  min-height: 100vh;
-  padding: 2rem 1rem;
-  position: relative;
-}
-
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  background-image: linear-gradient(125deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url("./image/bg_img.jpg");
-  background-size: cover;
-  background-position: center 30%;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  z-index: -2;
-}
-
-/* ============================================
-   ANIMATED GLOW ORBS
-   ============================================ */
-.glow-orb {
-  position: fixed;
-  width: 70vw;
-  height: 70vw;
-  background: radial-gradient(circle, rgba(0, 242, 255, 0.08) 0%, rgba(112, 0, 255, 0.05) 70%, transparent 100%);
-  border-radius: 50%;
-  top: -20vh;
-  right: -20vw;
-  filter: blur(70px);
-  z-index: -1;
-  animation: floatGlow 16s infinite alternate ease-in-out;
-}
-
-.glow-orb-bottom {
-  position: fixed;
-  bottom: -15vh;
-  left: -10vw;
-  width: 80vw;
-  height: 80vw;
-  background: radial-gradient(circle, rgba(10, 255, 157, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
-  filter: blur(90px);
-  z-index: -1;
-  animation: floatGlowReverse 20s infinite alternate;
-}
-
-@keyframes floatGlow {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.4;
-  }
-  100% {
-    transform: translate(3%, 5%) scale(1.2);
-    opacity: 0.6;
-  }
-}
-
-@keyframes floatGlowReverse {
-  0% {
-    transform: translate(0, 0) scale(1);
-    opacity: 0.3;
-  }
-  100% {
-    transform: translate(-4%, -3%) scale(1.3);
-    opacity: 0.5;
-  }
-}
-
-/* ============================================
-   GLASSMORPHIC CARD COMPONENT
-   ============================================ */
-.glass-ultra {
-  background: var(--glass-bg);
-  backdrop-filter: blur(14px);
-  border: 1px solid var(--glass-border);
-  border-radius: var(--card-radius);
-  box-shadow: var(--glow-md);
-  transition: all var(--transition-normal);
-  color: var(--text-primary);
-}
-
-.glass-ultra:hover {
-  box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 242, 255, 0.2);
-  transform: translateY(-2px);
-  background: var(--glass-bg-hover);
-}
-
-/* ============================================
-   NEON INPUT FIELDS - Black text
-   ============================================ */
-.input-neon {
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 1rem;
-  padding: 0.85rem 1.2rem;
-  color: var(--text-primary);
-  font-size: 0.95rem;
-  transition: all var(--transition-fast);
-  width: 100%;
-}
-
-.input-neon:focus {
-  outline: none;
-  border-color: var(--cyber-primary);
-  box-shadow: 0 0 14px rgba(0, 242, 255, 0.3);
-  background: rgba(255, 255, 255, 1);
-  color: var(--text-primary);
-}
-
-.input-neon::placeholder {
-  color: rgba(0, 0, 0, 0.5);
-  font-weight: 400;
-}
-
-/* ============================================
-   CYBERPUNK BUTTONS
-   ============================================ */
-.btn-cyber {
-  background: linear-gradient(95deg, #6d481d, #753901);
-  border: none;
-  border-radius: 1rem;
-  padding: 0.85rem 1.5rem;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: #ffffff;
-  width: 100%;
-  transition: all var(--transition-fast);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
-}
-
-.btn-cyber:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
-  background: linear-gradient(95deg, #8f5819, #914701);
-  color: #ffffff;
-}
-
-.btn-cyber:active {
-  transform: translateY(0);
-}
-
-/* Button Variants */
-.btn-cyber-primary {
-  background: linear-gradient(95deg, var(--cyber-primary), var(--cyber-secondary));
-  color: var(--text-primary);
-}
-
-.btn-cyber-primary:hover {
-  color: var(--text-primary);
-  box-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
-}
-
-.btn-cyber-danger {
-  background: linear-gradient(95deg, #ff2079, #ff0066);
-  color: #ffffff;
-}
-
-.btn-cyber-success {
-  background: linear-gradient(95deg, #0aff9d, #00d68f);
-  color: var(--text-primary);
-}
-
-/* ============================================
-   FUTURISTIC TABLE - Black text
-   ============================================ */
-.table-futuristic {
-  width: 100%;
-  border-collapse: separate;
-  border-spacing: 0 10px;
-}
-
-.table-futuristic thead th {
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 1px;
-  color: var(--text-primary);
-  background: transparent;
-  border-bottom: 2px solid rgba(0, 0, 0, 0.2);
-  padding-bottom: 12px;
-  padding-top: 8px;
-}
-
-.table-futuristic tbody tr {
-  background: rgba(255, 255, 255, 0.85);
-  backdrop-filter: blur(4px);
-  border-radius: 16px;
-  transition: all var(--transition-fast);
-  cursor: pointer;
-}
-
-.table-futuristic tbody td {
-  padding: 14px 12px;
-  vertical-align: middle;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  color: var(--text-primary);
-  font-weight: 500;
-}
-
-.table-futuristic tbody tr:hover {
-  background: rgba(255, 255, 255, 0.98);
-  transform: scale(1.01);
-  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
-}
-
-/* First and last cell border radius for table rows */
-.table-futuristic tbody tr td:first-child {
-  border-top-left-radius: 12px;
-  border-bottom-left-radius: 12px;
-}
-
-.table-futuristic tbody tr td:last-child {
-  border-top-right-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
-/* ============================================
-   ICON ACTION BUTTONS
-   ============================================ */
-.icon-btn {
-  background: rgba(0, 0, 0, 0.05);
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  border-radius: 10px;
-  width: 34px;
-  height: 34px;
-  transition: all var(--transition-fast);
-  color: var(--text-primary);
-  margin: 0 4px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.icon-btn:hover {
-  transform: scale(1.05);
-  background: rgba(0, 242, 255, 0.2);
-  color: var(--text-primary);
-  border-color: var(--cyber-primary);
-}
-
-.icon-btn.delete {
-  color: #dc3545;
-  border-color: rgba(220, 53, 69, 0.3);
-  background: rgba(220, 53, 69, 0.1);
-}
-
-.icon-btn.delete:hover {
-  background: rgba(220, 53, 69, 0.2);
-  color: #dc3545;
-  transform: scale(1.05);
-}
-
-.icon-btn.edit:hover {
-  background: rgba(0, 242, 255, 0.2);
-  color: var(--text-primary);
-  transform: scale(1.05);
-}
-
-/* ============================================
-   BADGE & COUNTER
-   ============================================ */
-.badge-counter {
-  background: linear-gradient(135deg, #00e0ff, #6a00ff);
-  padding: 6px 16px;
-  border-radius: 40px;
-  font-weight: 700;
-  font-size: 0.85rem;
-  box-shadow: 0 0 8px rgba(0, 224, 255, 0.4);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  color: var(--text-primary);
-}
-
-/* ============================================
-   MODAL CYBER STYLE - Black text
-   ============================================ */
-.modal-cyber {
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--cyber-primary);
-  border-radius: 28px;
-}
-
-.modal-cyber .modal-header {
-  border-bottom-color: rgba(0, 0, 0, 0.1);
-  padding: 1.25rem 1.5rem;
-}
-
-.modal-cyber .modal-header .modal-title {
-  color: var(--text-primary);
-  font-weight: 700;
-}
-
-.modal-cyber .modal-body {
-  padding: 1.5rem;
-  color: var(--text-primary);
-}
-
-.modal-cyber .modal-footer {
-  border-top-color: rgba(0, 0, 0, 0.1);
-  padding: 1rem 1.5rem;
-}
-
-/* Modal close button */
-.modal-cyber .btn-close {
-  filter: none;
-  opacity: 0.7;
-}
-
-.modal-cyber .btn-close:hover {
-  opacity: 1;
-}
-
-/* ============================================
-   UTILITY CLASSES
-   ============================================ */
-.text-cyber-primary {
-  color: var(--cyber-primary);
-}
-
-.text-cyber-accent {
-  color: var(--cyber-accent);
-}
-
-.text-cyber-green {
-  color: var(--cyber-green);
-}
-
-.text-black {
-  color: #000000 !important;
-}
-
-.text-dark {
-  color: var(--text-dark) !important;
-}
-
-.bg-cyber-dark {
-  background: var(--cyber-dark);
-}
-
-/* Form labels - Black text */
-.form-label {
-  color: var(--text-primary);
-  font-weight: 600;
-  margin-bottom: 8px;
-  font-size: 0.9rem;
-}
-
-/* Search wrapper */
-.search-wrapper {
-  position: relative;
-}
-
-.search-wrapper i {
-  position: absolute;
-  left: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-primary);
-  z-index: 1;
-}
-
-.search-wrapper input {
-  padding-left: 40px;
-}
-
-/* ============================================
-   SCROLLBAR CUSTOMIZATION
-   ============================================ */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--cyber-primary);
-  border-radius: 10px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--cyber-green);
-}
-
-/* ============================================
-   RESPONSIVE DESIGN
-   ============================================ */
-@media (max-width: 768px) {
-  body {
-    padding: 1rem;
-  }
-  
-  .glass-ultra {
-    padding: 1rem;
-  }
-  
-  .table-futuristic td,
-  .table-futuristic th {
-    font-size: 0.75rem;
-    padding: 10px 6px;
-  }
-  
-  .icon-btn {
-    width: 30px;
-    height: 30px;
-    font-size: 0.8rem;
-  }
-  
-  .badge-counter {
-    font-size: 0.75rem;
-    padding: 4px 12px;
-  }
-  
-  .btn-cyber {
-    padding: 0.7rem 1rem;
-    font-size: 0.9rem;
-  }
-  
-  .input-neon {
-    padding: 0.7rem 1rem;
-    font-size: 0.85rem;
-  }
-}
-
-/* ============================================
-   ANIMATIONS & LOADING STATES
-   ============================================ */
-@keyframes pulse {
-  0%, 100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-
-.loading {
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-/* Table empty state */
-.empty-state {
-  text-align: center;
-  padding: 3rem;
-  color: var(--text-muted);
-}
-
-.empty-state i {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  color: var(--cyber-primary);
-}
-
-/* ============================================
-   CARD COMPONENTS VARIATIONS
-   ============================================ */
-.card-stats {
-  background: var(--glass-bg);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--glass-border);
-  border-radius: 1rem;
-  padding: 1rem;
-  transition: all var(--transition-fast);
-  color: var(--text-primary);
-}
-
-.card-stats:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--glow-md);
-}
-
-/* Success / Error messages */
-.message-success {
-  background: rgba(10, 255, 157, 0.15);
-  border-left: 3px solid var(--cyber-green);
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  color: var(--text-primary);
-}
-
-.message-error {
-  background: rgba(255, 32, 121, 0.15);
-  border-left: 3px solid var(--cyber-accent);
-  padding: 0.75rem 1rem;
-  border-radius: 0.5rem;
-  color: var(--text-primary);
-}
-
-/* Additional utility for black text */
-.text-black-important {
-  color: #000000 !important;
-}
-
-/* Table header text color */
-th {
-  color: var(--text-primary) !important;
-}
-
-/* Any remaining info colors removed */
-.text-info,
-.bg-info,
-.btn-info {
-  color: var(--text-primary) !important;
-}
+ /* ============================================
+     GLOBAL RESET & VARIABLES
+     ============================================ */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --cyber-primary: #00f2ff;
+      --cyber-secondary: #7000ff;
+      --cyber-accent: #ff2079;
+      --cyber-green: #0aff9d;
+      --cyber-warning: #ffb800;
+      --cyber-dark: #0a0f2a;
+      --text-primary: #000000;
+      --text-secondary: #1a1a1a;
+      --text-muted: #333333;
+      --text-dark: #000000;
+      --glass-bg: rgba(255, 255, 255, 0.85);
+      --glass-bg-hover: rgba(255, 255, 255, 0.95);
+      --glass-border: rgba(0, 0, 0, 0.15);
+      --card-radius: 1.5rem;
+      --glow-sm: 0 0 8px rgba(0, 242, 255, 0.3);
+      --glow-md: 0 10px 30px -8px rgba(0, 0, 0, 0.3), 0 0 12px rgba(0, 242, 255, 0.2);
+      --transition-fast: 0.2s ease;
+      --transition-normal: 0.3s ease;
+    }
+
+    body {
+      font-family: "Inter", "Noto Sans Khmer", sans-serif;
+      background: radial-gradient(circle at 10% 20%, rgba(0, 20, 40, 1), rgba(0, 0, 0, 0.95));
+      background-attachment: fixed;
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: linear-gradient(125deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)), url("./image/bg_img.jpg");
+      background-size: cover;
+      background-position: center 30%;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      z-index: -2;
+    }
+
+    .glow-orb {
+      position: fixed;
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(circle, rgba(0, 242, 255, 0.08) 0%, rgba(112, 0, 255, 0.05) 70%, transparent 100%);
+      border-radius: 50%;
+      top: -20vh;
+      right: -20vw;
+      filter: blur(70px);
+      z-index: -1;
+      animation: floatGlow 16s infinite alternate ease-in-out;
+    }
+
+    .glow-orb-bottom {
+      position: fixed;
+      bottom: -15vh;
+      left: -10vw;
+      width: 80vw;
+      height: 80vw;
+      background: radial-gradient(circle, rgba(10, 255, 157, 0.08) 0%, rgba(0, 0, 0, 0) 70%);
+      filter: blur(90px);
+      z-index: -1;
+      animation: floatGlowReverse 20s infinite alternate;
+    }
+
+    @keyframes floatGlow {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.4; }
+      100% { transform: translate(3%, 5%) scale(1.2); opacity: 0.6; }
+    }
+
+    @keyframes floatGlowReverse {
+      0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+      100% { transform: translate(-4%, -3%) scale(1.3); opacity: 0.5; }
+    }
+
+    .glass-ultra {
+      background: var(--glass-bg);
+      backdrop-filter: blur(14px);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--card-radius);
+      box-shadow: var(--glow-md);
+      transition: all var(--transition-normal);
+      color: var(--text-primary);
+    }
+
+    .glass-ultra:hover {
+      box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 242, 255, 0.2);
+      transform: translateY(-2px);
+      background: var(--glass-bg-hover);
+    }
+
+    .input-neon {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 1rem;
+      padding: 0.85rem 1.2rem;
+      color: var(--text-primary);
+      font-size: 0.95rem;
+      transition: all var(--transition-fast);
+      width: 100%;
+    }
+
+    .input-neon:focus {
+      outline: none;
+      border-color: var(--cyber-primary);
+      box-shadow: 0 0 14px rgba(0, 242, 255, 0.3);
+      background: rgba(255, 255, 255, 1);
+      color: var(--text-primary);
+    }
+
+    .input-neon::placeholder {
+      color: rgba(0, 0, 0, 0.5);
+      font-weight: 400;
+    }
+
+    .btn-cyber {
+      background: linear-gradient(95deg, #6d481d, #753901);
+      border: none;
+      border-radius: 1rem;
+      padding: 0.85rem 1.5rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: #ffffff;
+      width: 100%;
+      transition: all var(--transition-fast);
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+    }
+
+    .btn-cyber:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(95deg, #8f5819, #914701);
+      color: #ffffff;
+    }
+
+    .table-futuristic {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+    }
+
+    .table-futuristic thead th {
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      color: var(--text-primary);
+      background: transparent;
+      border-bottom: 2px solid rgba(0, 0, 0, 0.2);
+      padding-bottom: 12px;
+      padding-top: 8px;
+    }
+
+    .table-futuristic tbody tr {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(4px);
+      border-radius: 16px;
+      transition: all var(--transition-fast);
+      cursor: pointer;
+    }
+
+    .table-futuristic tbody td {
+      padding: 14px 12px;
+      vertical-align: middle;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+
+    .table-futuristic tbody tr:hover {
+      background: rgba(255, 255, 255, 0.98);
+      transform: scale(1.01);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    }
+
+    .icon-btn {
+      background: rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 10px;
+      width: 34px;
+      height: 34px;
+      transition: all var(--transition-fast);
+      color: var(--text-primary);
+      margin: 0 4px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .icon-btn:hover {
+      transform: scale(1.05);
+      background: rgba(0, 242, 255, 0.2);
+      color: var(--text-primary);
+      border-color: var(--cyber-primary);
+    }
+
+    .icon-btn.delete {
+      color: #dc3545;
+      border-color: rgba(220, 53, 69, 0.3);
+      background: rgba(220, 53, 69, 0.1);
+    }
+
+    .icon-btn.delete:hover {
+      background: rgba(220, 53, 69, 0.2);
+      color: #dc3545;
+      transform: scale(1.05);
+    }
+
+    .badge-counter {
+      background: linear-gradient(135deg, #00e0ff, #6a00ff);
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      box-shadow: 0 0 8px rgba(0, 224, 255, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-primary);
+    }
+
+    .modal-cyber {
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--cyber-primary);
+      border-radius: 28px;
+    }
+
+    .form-label {
+      color: var(--text-primary);
+      font-weight: 600;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+    }
+
+    /* Currency radio buttons */
+    .currency-group {
+      display: flex;
+      gap: 20px;
+      padding: 10px 0;
+    }
+
+    .currency-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      padding: 8px 16px;
+      border-radius: 50px;
+      background: rgba(0, 0, 0, 0.05);
+      transition: all 0.2s;
+    }
+
+    .currency-option.selected {
+      background: linear-gradient(95deg, #00f2ff20, #7000ff20);
+      border: 1px solid #00f2ff;
+    }
+
+    .currency-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .currency-option label {
+      cursor: pointer;
+      margin: 0;
+      font-weight: 500;
+    }
+
+    /* Amount display with currency symbol */
+    .amount-usd {
+      color: #ffa500;
+      font-weight: bold;
+    }
+
+    .amount-khr {
+      color: #0aff9d;
+      font-weight: bold;
+    }
+
+    .currency-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 20px;
+      font-size: 0.7rem;
+      margin-left: 8px;
+    }
+
+    .currency-badge.usd {
+      background: #ffa50020;
+      color: #ffa500;
+    }
+
+    .currency-badge.khr {
+      background: #0aff9d20;
+      color: #0aff9d;
+    }
+
+    /* Total Summary Cards */
+    .summary-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-radius: 1rem;
+      padding: 1rem 1.5rem;
+      transition: all var(--transition-fast);
+      border: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .summary-card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--glow-md);
+    }
+
+    .summary-title {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .summary-amount {
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+
+    .summary-amount.usd {
+      color: #ffa500;
+    }
+
+    .summary-amount.khr {
+      color: #ffa500;
+    }
+
+    .summary-icon {
+      font-size: 2rem;
+      opacity: 0.5;
+    }
+
+    /* Sort selector */
+    .sort-selector {
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 0.75rem;
+      padding: 0.5rem 1rem;
+      font-size: 0.85rem;
+      cursor: pointer;
+    }
+
+    hr {
+      opacity: 0.2;
+      margin: 1rem 0;
+    }
+
+    @media (max-width: 768px) {
+      body { padding: 1rem; }
+      .table-futuristic td, .table-futuristic th { font-size: 0.75rem; padding: 10px 6px; }
+      .icon-btn { width: 30px; height: 30px; font-size: 0.8rem; }
+      .summary-amount { font-size: 1.2rem; }
+      .summary-card { padding: 0.75rem 1rem; }
+    }
