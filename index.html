@@ -25,7 +25,7 @@
     </h1>
   </div>
 
-  <!-- SUMMARY SECTION - Total Amount -->
+  <!-- SUMMARY SECTION -->
   <div class="row justify-content-center mb-4">
     <div class="col-lg-10 col-md-12">
       <div class="glass-ultra p-4">
@@ -34,44 +34,29 @@
           <h4 class="mb-0 fw-semibold">សរុបទឹកប្រាក់</h4>
         </div>
         <div class="row g-3">
-          <!-- Total USD Card -->
           <div class="col-md-6">
             <div class="summary-card">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <div class="summary-title">
-                    <i class="fas fa-dollar-sign me-1"></i> សរុបប្រាក់ដុល្លារ
-                  </div>
-                  <div class="summary-amount usd" id="totalUSD">
-                    $0.00
-                  </div>
+                  <div class="summary-title"><i class="fas fa-dollar-sign me-1"></i> សរុបប្រាក់ដុល្លារ</div>
+                  <div class="summary-amount usd" id="totalUSD">$0.00</div>
                 </div>
-                <div class="summary-icon">
-                  <i class="fas fa-dollar-sign"></i>
-                </div>
+                <div class="summary-icon"><i class="fas fa-dollar-sign"></i></div>
               </div>
             </div>
           </div>
-          <!-- Total KHR Card -->
           <div class="col-md-6">
             <div class="summary-card">
               <div class="d-flex justify-content-between align-items-center">
                 <div>
-                  <div class="summary-title">
-                    <i class="fas fa-riel-sign me-1"></i> សរុបប្រាក់រៀល
-                  </div>
-                  <div class="summary-amount khr" id="totalKHR">
-                    0 ៛
-                  </div>
+                  <div class="summary-title"><i class="fas fa-riel-sign me-1"></i> សរុបប្រាក់រៀល</div>
+                  <div class="summary-amount khr" id="totalKHR">0 ៛</div>
                 </div>
-                <div class="summary-icon">
-                  <i class="fas fa-riel-sign"></i>
-                </div>
+                <div class="summary-icon"><i class="fas fa-riel-sign"></i></div>
               </div>
             </div>
           </div>
         </div>
-        <!-- Grand Total Line -->
         <hr>
         <div class="d-flex justify-content-between align-items-center mt-2">
           <span class="fw-semibold"><i class="fas fa-calculator me-2"></i>សរុបទាំងអស់ (ប្រមាណជាដុល្លារ)</span>
@@ -101,11 +86,13 @@
             </div>
             <div class="col-md-4">
               <label class="form-label small mb-1"><i class="fas fa-money-bill"></i> ចំនួនទឹកប្រាក់</label>
-              <input type="number" id="moneyInp" class="input-neon" placeholder="បញ្ចូលចំនួនទឹកប្រាក់" step="any" required />
+              <input type="text" id="moneyInp" class="input-neon" placeholder="បញ្ចូលលេខ (ទាំងខ្មែរ ឬឡាតាំង)" required />
+              <div class="number-preview" id="numberPreview">
+                <i class="fas fa-info-circle"></i> លេខដែលបានបំប្លែង៖ <span id="convertedNumber">-</span>
+              </div>
             </div>
           </div>
           
-          <!-- Currency Selection - Code will auto-select based on amount -->
           <div class="mt-3">
             <label class="form-label small mb-2"><i class="fas fa-exchange-alt"></i> ប្រភេទរូបិយប័ណ្ណ (កំណត់ដោយស្វ័យប្រវត្តិ)</label>
             <div class="currency-group" id="currencyGroup">
@@ -119,7 +106,7 @@
               </div>
             </div>
             <small class="text-muted d-block mt-2">
-              <i class="fas fa-info-circle"></i> ប្រព័ន្ធនឹងកំណត់ប្រភេទរូបិយប័ណ្ណដោយស្វ័យប្រវត្តិតាមចំនួនទឹកប្រាក់ដែលអ្នកបញ្ចូល
+              <i class="fas fa-info-circle"></i> ប្រព័ន្ធនឹងកំណត់ប្រភេទរូបិយប័ណ្ណដោយស្វ័យប្រវត្តិតាមចំនួនទឹកប្រាក់
             </small>
           </div>
           
@@ -137,33 +124,15 @@
       <div class="glass-ultra p-4">
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
           <h5 class="mb-0"><i class="fas fa-table-list me-2"></i> បញ្ជីសមាជិកទាំងអស់</h5>
-          <div class="d-flex gap-2 mt-2 mt-sm-0 align-items-center">
-            <span class="badge-counter" id="countLabel"><i class="fas fa-user-check me-1"></i>0 នាក់</span>
-            <!-- Sort Selector -->
-            <select id="sortSelect" class="sort-selector">
-              <option value="newest">ចាស់ជាងគេ (ខាងលើ)</option>
-              <option value="oldest" selected>ថ្មីជាងគេ (ខាងលើ)</option>
-            </select>
-          </div>
+          <span class="badge-counter mt-2 mt-sm-0" id="countLabel"><i class="fas fa-user-check me-1"></i>0 នាក់</span>
         </div>
         <div class="table-responsive" style="max-height: 500px; overflow-y: auto;">
           <table class="table-futuristic">
             <thead>
-              <tr>
-                <th>#</th>
-                <th>ឈ្មោះពេញ</th>
-                <th>អាសយដ្ឋាន</th>
-                <th class="text-end">ថវិកា</th>
-                <th class="text-center">សកម្មភាព</th>
-              </tr>
+              <tr><th>#</th><th>ឈ្មោះពេញ</th><th>អាសយដ្ឋាន</th><th class="text-end">ថវិកា</th><th class="text-center">សកម្មភាព</th></tr>
             </thead>
             <tbody id="listBody">
-              <tr>
-                <td colspan="5" class="text-center py-5 opacity-50">
-                  <i class="fas fa-spinner fa-pulse fa-2x mb-2 d-block"></i>
-                  កំពុងផ្ទុកទិន្នន័យ...
-                </td>
-              </tr>
+              <tr><td colspan="5" class="text-center py-5"><i class="fas fa-spinner fa-pulse"></i> កំពុងផ្ទុក...</td></tr>
             </tbody>
           </table>
         </div>
@@ -178,18 +147,17 @@
     <div class="modal-content modal-cyber">
       <div class="modal-header border-0 pb-0">
         <h5 class="modal-title fw-bold"><i class="fas fa-pen-fancy me-2"></i>កែសម្រួលព័ត៌មាន</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
       </div>
       <div class="modal-body pt-3">
         <input type="hidden" id="editId" />
-        <input type="hidden" id="editCurrency" />
-        <label class="small mb-1">ឈ្មោះពេញ</label>
-        <input type="text" id="editName" class="input-neon mb-3" placeholder="ឈ្មោះពេញ" />
-        <label class="small mb-1">អាសយដ្ឋាន</label>
-        <input type="text" id="editAddr" class="input-neon mb-3" placeholder="អាសយដ្ឋាន" />
-        <label class="small mb-1">ចំនួនទឹកប្រាក់</label>
-        <input type="number" id="editMoney" class="input-neon mb-3" placeholder="ចំនួនទឹកប្រាក់" step="any" />
-        <label class="small mb-1">ប្រភេទរូបិយប័ណ្ណ</label>
+        <label>ឈ្មោះពេញ</label>
+        <input type="text" id="editName" class="input-neon mb-3" />
+        <label>អាសយដ្ឋាន</label>
+        <input type="text" id="editAddr" class="input-neon mb-3" />
+        <label>ចំនួនទឹកប្រាក់</label>
+        <input type="number" id="editMoney" class="input-neon mb-3" step="any" />
+        <label>ប្រភេទរូបិយប័ណ្ណ</label>
         <select id="editCurrencySelect" class="input-neon mb-3">
           <option value="USD">ដុល្លារ (USD)</option>
           <option value="KHR">រៀល (KHR)</option>
@@ -202,8 +170,8 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-<script type="module" src="./script.js">
-  
+<script type="module"​ src="./script.js">
+ 
 </script>
 
 </body>
